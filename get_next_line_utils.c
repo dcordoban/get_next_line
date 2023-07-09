@@ -6,7 +6,7 @@
 /*   By: dcordoba <dcordoba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:25:31 by dcordoba          #+#    #+#             */
-/*   Updated: 2023/06/06 21:30:56 by dcordoba         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:32:18 by dcordoba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,44 +22,63 @@ size_t	ft_strlen(const char	*s)
 	return (i);
 }
 
-t_list	*ft_lstnew(void *content)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	t_list	*n_node;
+	unsigned char		*ptr_to_dst;
+	const unsigned char	*ptr_to_src;
 
-	n_node = (t_list *)malloc(sizeof(t_list));
-	if (n_node)
+	ptr_to_src = (unsigned char *) src;
+	ptr_to_dst = (unsigned char *) dest;
+	if (!ptr_to_dst && !ptr_to_src)
+		return (ptr_to_dst);
+	while (n-- > 0)
+		*(ptr_to_dst++) = *(ptr_to_src++);
+	return (dest);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*j_str;
+	size_t	i;
+	size_t	s1_len;
+	size_t	s2_len;
+	size_t	t_len;
+
+	i = 0;
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	t_len = ft_strlen(s1) + ft_strlen(s2);
+	j_str = (char *)malloc((t_len + 1) * sizeof(char));
+	if (j_str)
 	{
-		n_node->content = content;
-		n_node->next = NULL;
-		return (n_node);
+		if (t_len == 0)
+			j_str[0] = NULL;
+		else
+		{
+			ft_memcpy(j_str, s1, s1_len);
+			while (i < s2_len)
+				j_str[s1_len++] = s2[i++];
+		j_str[t_len] = '\0';
+		}
+		return (j_str);
 	}
 	return (0);
 }
 
-t_list	*ft_lstlast(t_list *lst)
+char	*ft_strchr(const char *s, int c)
 {
-	if (!lst)
-		return (0);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
+	size_t			i;
+	unsigned char	to_find;
+	size_t			s_len;
 
-
-void	ft_lstdelone(t_list *lst, void (*del)(void*))
-{
-	if (!lst)
-		return ;
-	del(lst->content);
-	free(lst);
-}
-
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	if (!*lst)
+	i = 0;
+	to_find = (unsigned char) c;
+	s_len = ft_strlen(s);
+	while (i <= s_len)
 	{
-		*lst = new;
-		return ;
+		if (s[i] == to_find)
+			return ((char *)s + i);
+		i++;
 	}
-	ft_lstlast(*lst)->next = new;
+	return (0);
 }
