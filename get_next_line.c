@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcordoba <dcordoba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:32:31 by dcordoba          #+#    #+#             */
-/*   Updated: 2023/07/09 19:32:21 by dcordoba         ###   ########.fr       */
+/*   Updated: 2023/07/10 18:33:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,39 @@ char	*read_line(int fd, char *buffer)
 	char	*tmp;
 	int		readed;
 
-	readed = read(fd, buffer, BUFFER_SIZE);
+	
+	tmp = malloc(BUFFER_SIZE + 1*sizeof(char));
+	readed = read(fd, tmp, BUFFER_SIZE);
 	if (readed == BUFFER_SIZE)
 	{
-		tmp = malloc(BUFFER_SIZE + 1*sizeof(char));
 		if (!tmp)
 		{
-			free(*buffer);
+			free(buffer);
 			buffer = NULL;
 			return (NULL);
 		}
 		else{
 			tmp[readed + 1] = '\0';
+			if (!buffer)
+				buffer = "\0";
 			buffer = ft_strjoin(buffer, tmp);
 			return (buffer);
 		}
 	}
 	else
 	{
-		free(*buffer);
+		free(buffer);
 		buffer = NULL;
 		return (NULL);
 	}
-	
+
 
 }
 char	*get_next_line(int fd)
 {
-	static	char*	buffer = {0};
-	int				readed;
-	char 			*line;
+	static	char*	buffer;
+	//int				readed;
+	//char 			*line;
 	//check for conditions to return null
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -56,17 +59,25 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 
-	
-	
+	return (buffer);
+
 	//extract from list and return line
 	//clean line from list and clean listvoid	read_and_store(t_list **storage, int *readed, int fd)
-{
-	char	*buffer;
-
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return ;
-	readed = read(fd, buffer, BUFFER_SIZE);
 }
+int	main(int argc, char **argv)
+{
+	int	fd;
+	int i = 6;
+	char *str;
 
+	if (argc == 50)
+		return (2);
+	fd = open(argv[1], O_RDONLY);
+	while (i-- > 0)
+	{
+		str = get_next_line(fd);
+		printf("%s", str);
+	}
+	close(fd);
+	return (0);
 }
