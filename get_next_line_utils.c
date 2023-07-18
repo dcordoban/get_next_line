@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dcordoba <dcordoba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:25:31 by dcordoba          #+#    #+#             */
-/*   Updated: 2023/07/10 18:28:35 by david            ###   ########.fr       */
+/*   Updated: 2023/07/18 22:10:47 by dcordoba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 size_t	ft_strlen(const char	*s)
 {
@@ -63,7 +64,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (0);
 }
 
-char	*ft_strchr(const char *s, int c)
+size_t	ft_strchr(const char *s, int c)
 {
 	size_t			i;
 	unsigned char	to_find;
@@ -75,8 +76,33 @@ char	*ft_strchr(const char *s, int c)
 	while (i <= s_len)
 	{
 		if (s[i] == to_find)
-			return ((char *)s + i);
+			return (i);
 		i++;
 	}
 	return (0);
 }
+
+char	*ft_substr(char *str, unsigned int start, size_t str_len)
+{
+	char	*line;
+	size_t	len;
+	size_t	i;
+
+	i = -1;
+	if (ft_strlen(str + start) < str_len)
+		len = ft_strlen(str + start);
+	else
+		len = str_len - (start + 1);
+	line = malloc(sizeof(char) * (len + 1));
+	if (!line)
+	{
+		free(str);
+		str = NULL;
+		return (NULL);
+	}
+	while (++i < len)
+		line[i] = str[start + i];
+	return (line);
+}
+
+
