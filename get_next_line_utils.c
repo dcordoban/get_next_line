@@ -6,10 +6,13 @@
 /*   By: dcordoba <dcordoba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:25:31 by dcordoba          #+#    #+#             */
-/*   Updated: 2023/07/18 22:10:47 by dcordoba         ###   ########.fr       */
+/*   Updated: 2023/07/24 19:55:44 by dcordoba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
 size_t	ft_strlen(const char	*s)
 {
@@ -93,7 +96,7 @@ char	*ft_substr(char *str, unsigned int start, size_t str_len)
 		len = ft_strlen(str + start);
 	else
 		len = str_len - (start + 1);
-	line = malloc(sizeof(char) * (len + 1));
+	line = malloc((len + 1) * sizeof(char));
 	if (!line)
 	{
 		free(str);
@@ -104,5 +107,3 @@ char	*ft_substr(char *str, unsigned int start, size_t str_len)
 		line[i] = str[start + i];
 	return (line);
 }
-
-
