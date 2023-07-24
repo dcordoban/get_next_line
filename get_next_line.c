@@ -6,7 +6,7 @@
 /*   By: dcordoba <dcordoba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:32:31 by dcordoba          #+#    #+#             */
-/*   Updated: 2023/07/24 20:51:40 by dcordoba         ###   ########.fr       */
+/*   Updated: 2023/07/24 23:08:41 by dcordoba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,25 @@ char	*read_line(int fd, char *buffer)
 	int		readed;
 
 	tmp = malloc(BUFFER_SIZE + 1 * sizeof(char));
+	if (!tmp)
+		return (ft_free(buffer));
+	tmp[0] = '\0';
 	readed = read(fd, tmp, BUFFER_SIZE);
 	if (readed > 0)
 	{
-		if (!tmp)
-			ft_free(tmp);
-		else
-		{
-			tmp[readed + 1] = '\0';
-			if (!buffer)
-				buffer = "\0";
-			buffer = ft_strjoin(buffer, tmp);
-			return (buffer);
-		}
+		tmp[readed] = '\0';
+		if (!buffer)
+			buffer = "\0";
+		buffer = ft_strjoin(buffer, tmp);
 	}
-	else
+	else if (readed == -1)
 	{
-		free(tmp);
-		return (NULL);
+		ft_free(tmp);
+		return (ft_free(buffer));
 	}
-	return (NULL);
+	free(tmp);
+	tmp = NULL;
+	return (buffer);
 }
 
 char	*extract_line(char *line, char **buffer)

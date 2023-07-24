@@ -6,7 +6,7 @@
 int	main(int argc, char **argv)
 {
 	int	fd;
-	int i = 10;
+	int i = 4;
 	char *str;
 
 	if (argc == 50)

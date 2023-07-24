@@ -6,7 +6,7 @@
 /*   By: dcordoba <dcordoba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:25:31 by dcordoba          #+#    #+#             */
-/*   Updated: 2023/07/24 19:55:44 by dcordoba         ###   ########.fr       */
+/*   Updated: 2023/07/24 23:02:32 by dcordoba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,25 +85,29 @@ size_t	ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_substr(char *str, unsigned int start, size_t str_len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
-	char	*line;
-	size_t	len;
+	char	*substr;
 	size_t	i;
 
-	i = -1;
-	if (ft_strlen(str + start) < str_len)
-		len = ft_strlen(str + start);
-	else
-		len = str_len - (start + 1);
-	line = malloc((len + 1) * sizeof(char));
-	if (!line)
+	if (s == NULL)
+		return (0);
+	if (start > ft_strlen(s))
 	{
-		free(str);
-		str = NULL;
-		return (NULL);
+		substr = malloc(sizeof(char) * 1);
+		if (!substr)
+			return (NULL);
+		substr[0] = '\0';
+		return (substr);
 	}
-	while (++i < len)
-		line[i] = str[start + i];
-	return (line);
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	substr = (char *)malloc((len + 1) * sizeof(char));
+	if (!substr)
+		return (0);
+	i = 0;
+	while (start < ft_strlen(s) && i < len && &s[start])
+		substr[i++] = s[start++];
+	substr[i] = '\0';
+	return (substr);
 }
