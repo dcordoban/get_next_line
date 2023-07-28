@@ -6,7 +6,7 @@
 /*   By: dcordoba <dcordoba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:19:14 by dcordoba          #+#    #+#             */
-/*   Updated: 2023/07/24 23:08:45 by dcordoba         ###   ########.fr       */
+/*   Updated: 2023/07/28 20:51:03 by dcordoba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strchr(const char *s, int c);
+char	*ft_strjoin(char *s1, char *s2);
+int		ft_strchr(char *s, int c);
 char	*free_mem(char **buffer);
-char	*ft_free(char *str);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char	*s);
 
