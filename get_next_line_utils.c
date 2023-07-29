@@ -6,7 +6,7 @@
 /*   By: dcordoba <dcordoba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:25:31 by dcordoba          #+#    #+#             */
-/*   Updated: 2023/07/28 20:53:43 by dcordoba         ###   ########.fr       */
+/*   Updated: 2023/07/29 11:56:34 by dcordoba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ size_t	ft_strlen(const char	*s)
 	return (i);
 }
 
+static char	*ft_free(char *str)
+{
+	free(str);
+	str = NULL;
+	return (str);
+}
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*j_str;
@@ -39,7 +46,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	j_str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!j_str)
-		free(s1);
+		return (ft_free(s1));
 	i = -1;
 	while (s1[++i])
 		j_str[i] = s1[i];
@@ -47,7 +54,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[++j])
 		j_str[i + j] = s2[j];
 	j_str[i + j] = '\0';
-	free(s1);
+	ft_free(s1);
 	return (j_str);
 }
 
